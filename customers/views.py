@@ -7,6 +7,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
 @api_view(['GET','POST'])
+@permission_classes([IsAuthenticated])
 def customers(request):
     if request.method == 'GET':
         data =Customer.objects.all()
@@ -20,6 +21,7 @@ def customers(request):
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET','POST','DELETE'])
+@permission_classes([IsAuthenticated])
 def customer(request, id):
     try:
         data =Customer.objects.get(pk=id)
