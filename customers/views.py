@@ -26,7 +26,6 @@ def customer(request,id):
         return Response(status=status.HTTP_404_NOT_FOUND)
     
     if request.method=='GET':
-        raise Exception()
         serializer=CustomerSerializer(data)
         return Response({'customer': serializer.data})
     elif request.method=='DELETE':
