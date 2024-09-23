@@ -12,10 +12,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
-import django 
-from django.utils.encoding import force_str
-django.utils.encoding.force_text = force_str
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,19 +20,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_*$868#t6v$e4c%3h6-xgnl3#%wfhle5&%15+0#_cu+b)f(0p('
+SECRET_KEY = 'django-insecure-p*dq=%izii8fm3w2rvq+a)z-6=gv389qlvqdny44i(8xbb!5ny'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "192.168.1.37"]
 
 from datetime import timedelta
-SIMPLE_JWT={
-    'ACCESS_TOKEN_LIFETIME':timedelta(minutes=15),
-    'ROTATE_REFRESH_TOKENS': True,
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'ROTATE_REFRESH_TOKENS': True,
 }
+
+
 
 
 # Application definition
@@ -54,7 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-GRAPHENE={
+GRAPHENE = {
     'SCHEMA': 'customers.schema.schema'
 }
 
@@ -69,11 +67,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-REST_FRAMEWORK={
+
+REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',)
 }
 
 CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
+
 
 ROOT_URLCONF = 'customers.urls'
 
