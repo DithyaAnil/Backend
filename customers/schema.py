@@ -8,6 +8,18 @@ class CustomerType(DjangoObjectType):
         model = Customer
         fields = '__all__'
 
+class CreateCustomer(graphene.Mutation):
+    class Arguments:
+        name = graphene.String()
+        industry = graphene.String()
+
+    customer = graphene.Field(CustomerType)
+
+    def mutate(root,info,name,industry):
+        customer=Customer(name=name,industry=industry)
+        customer.save()
+        return CreateCustomer(customer=customer)
+
 class Query(graphene.ObjectType):
     customers = graphene.List(CustomerType)
     customer_by_name = graphene.List(CustomerType,name = graphene.String(required=True))
@@ -21,4 +33,7 @@ class Query(graphene.ObjectType):
         except Customer.DoesNotExist:
             return None
     
-schema = graphene.Schema(query=Query)
+class Mutations(graphene.ObjectType):
+    createCustomer = CreateCustomer.Field()
+
+schema = graphene.Schema(query=Query,mutation=Mutations)
