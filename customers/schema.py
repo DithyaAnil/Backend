@@ -1,6 +1,5 @@
 import graphene 
 from graphene_django import DjangoObjectType
-
 from customers.models import Customer
 
 class CustomerType(DjangoObjectType):
