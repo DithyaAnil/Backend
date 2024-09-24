@@ -13,6 +13,20 @@ class OrderType(DjangoObjectType):
         model = Order
         fields = '__all__'
 
+class CreateOrder(graphene.Mutation):
+    class Arguments:
+        description = graphene.String()
+        total_in_cents = graphene.Int()
+        customer = graphene.ID()
+
+    order=graphene.Field(OrderType)
+
+    def mutate(root,info,description,total_in_cents,customer):
+        order=Order(description=description,total_in_cents=total_in_cents,customer_id=customer)
+        order.save()
+        return CreateOrder(order=order)
+
+
 class CreateCustomer(graphene.Mutation):
     class Arguments:
         name = graphene.String()
@@ -43,6 +57,7 @@ class Query(graphene.ObjectType):
         return Order.objects.select_related('customer').all()
     
 class Mutations(graphene.ObjectType):
-    createCustomer = CreateCustomer.Field()
+    create_customer = CreateCustomer.Field()
+    create_order=CreateOrder.Field()
 
 schema = graphene.Schema(query=Query,mutation=Mutations)
